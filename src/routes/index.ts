@@ -44,7 +44,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "products" */ "../views/kategori/index.vue"),
   },
-
+  
   {
     path: "/kategori/create",
     name: "kategori-create",
@@ -60,8 +60,15 @@ const routes: Array<RouteRecordRaw> = [
       import(
         /* webpackChunkName: "products-edit" */ "../views/kategori/edit.vue"
       ),
-  },
-];
+    },
+    // Route Login
+    {
+      path: "/login",
+      name: "login",
+      component: () =>
+        import(/* webpackChunkName: "products" */ "../views/login/index.vue"),
+    },
+  ];
 
 // Create router with explicit type annotations
 const router = createRouter({

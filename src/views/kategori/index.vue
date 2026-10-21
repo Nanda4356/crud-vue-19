@@ -20,7 +20,7 @@ const fetchDataKategori = async () => {
     try {
 
         //fetch data kategori dari API
-        const response = await Api.get("/api/kategori");
+        const response = await Api.get("/kategori");
 
         //set data kategori
         kategori.value = response.data.data || response.data;
@@ -44,7 +44,7 @@ const deleteKategori = async (id: number) => {
   try {
 
     //delete kategori berdasarkan id
-    await Api.delete(`/api/kategori/${id}`);
+    await Api.delete(`/kategori/${id}`);
 
     //call method "fetchDataPosts"
     fetchDataKategori();

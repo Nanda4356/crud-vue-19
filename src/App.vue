@@ -1,3 +1,35 @@
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from "vue";
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const isLoggedIn = ref(false);
+
+const checkAuth = () => {
+  isLoggedIn.value = !!localStorage.getItem('token');
+};
+
+const handleLogout = () => {
+  // 1. Hapus token
+  localStorage.removeItem('token');
+
+  // 2. Beritahu aplikasi kalau status login berubah
+  window.dispatchEvent(new Event('auth-change'));
+
+  // 3. Arahkan kembali ke halaman login
+  router.push('/login');
+};
+
+onMounted(() => {
+  checkAuth(); // Cek status pas pertama kali halaman dimuat
+  window.addEventListener('auth-change', checkAuth); // Dengarkan perubahan token
+});
+
+onUnmounted(() => {
+  window.removeEventListener('auth-change', checkAuth); // Bersihkan event listener
+});
+</script>
+
 <template>
   <div>
     <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
@@ -17,7 +49,14 @@
             </li>
           </ul>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0" role="search">
-            <a href="https://santrikoding.com" target="_blank" class="btn btn-success">SANTRIKODING.COM</a>
+            <li>
+              <button v-if="isLoggedIn" class="btn btn-success" @click="handleLogout">
+                Logout
+              </button>
+              <router-link v-else to="/login" class="btn btn-success" aria-current="page">
+                LOGIN
+              </router-link>
+            </li>
           </ul>
         </div>
       </div>
@@ -28,4 +67,3 @@
 
   </div>
 </template>
-

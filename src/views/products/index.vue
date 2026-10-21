@@ -27,7 +27,7 @@ const categories = ref<Record<number, string>>({});
 
 const fetchDataCategories = async () => {
     try {
-        const response = await Api.get("/api/kategori");
+        const response = await Api.get("/kategori");
         const categoryList: Kategori[] = response.data.data || response.data;
         
         // Ubah array kategori menjadi object key-value untuk pencarian cepat O(1)
@@ -45,7 +45,7 @@ const fetchDataProducts = async () => {
     try {
 
         //fetch data products dari API
-        const response = await Api.get("/api/products");
+        const response = await Api.get("/products");
 
         //set data products
         products.value = response.data.data || response.data;
@@ -70,7 +70,7 @@ const deleteProduct = async (id: number) => {
     try {
 
         //delete product berdasarkan id
-        await Api.delete(`/api/products/${id}`);
+        await Api.delete(`/products/${id}`);
 
         //call method "fetchDataPosts"
         fetchDataProducts();
